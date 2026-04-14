@@ -1,0 +1,98 @@
+# ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# .gitignore tells Git which files and directories to exclude from
+# version control. This is critical for:
+# 1. Security — Never commit secrets (.env, API keys)
+# 2. Cleanliness — Ignore build artifacts, caches, OS files
+# 3. Performance — Don't track node_modules (100k+ files)
+#
+# Compare with ASP.NET: Similar to .gitignore in VS, but here we
+# handle both Python AND Node.js ecosystems in one file.
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# ──────────────────────────────────────────────────────────────
+# Environment & Secrets
+# CRITICAL: Never commit these files. They contain API keys,
+# database passwords, and other sensitive configuration.
+# ──────────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# ──────────────────────────────────────────────────────────────
+# Python (Backend)
+# ──────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+
+# uv
+# The lock file IS committed (reproducible builds)
+# but the cache is not
+.uv/
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# mypy
+.mypy_cache/
+
+# ruff
+.ruff_cache/
+
+# ──────────────────────────────────────────────────────────────
+# Node.js (Frontend)
+# ──────────────────────────────────────────────────────────────
+node_modules/
+.next/
+out/
+.turbo/
+
+# ──────────────────────────────────────────────────────────────
+# Docker
+# ──────────────────────────────────────────────────────────────
+# Local Docker data volumes (if mounted locally)
+docker-data/
+pgdata/
+
+# ──────────────────────────────────────────────────────────────
+# IDE — PyCharm / JetBrains
+# ──────────────────────────────────────────────────────────────
+.idea/
+
+# ──────────────────────────────────────────────────────────────
+# IDE — VS Code (if used alongside PyCharm)
+# ──────────────────────────────────────────────────────────────
+.vscode/
+
+# ──────────────────────────────────────────────────────────────
+# OS Files
+# ──────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ──────────────────────────────────────────────────────────────
+# Logs
+# ──────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ──────────────────────────────────────────────────────────────
+# Uploads & User Data (local development)
+# ──────────────────────────────────────────────────────────────
+uploads/
+storage/

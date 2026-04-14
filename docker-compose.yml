@@ -1,0 +1,137 @@
+# ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# docker-compose.yml: Service Orchestration
+#
+# Docker Compose lets you define and run multi-container applications.
+# Think of it as a recipe that describes what services your app needs
+# (database, cache, etc.) and how they connect to each other.
+#
+# Compare with ASP.NET:
+# - In .NET, you might install SQL Server locally or use LocalDB
+# - Here, PostgreSQL runs in a container — isolated, reproducible, disposable
+# - Everyone on the team gets the EXACT same database setup
+#
+# Key concepts:
+# - `services`: Each service is a container (like a lightweight VM)
+# - `volumes`: Persist data across container restarts
+# - `ports`: Map container ports to your host machine
+# - `healthcheck`: Verify the service is running correctly
+# - `networks`: Isolated communication between containers
+#
+# Usage:
+#   docker compose up -d     # Start all services in background
+#   docker compose down       # Stop all services
+#   docker compose logs -f    # Follow logs
+#   docker compose ps         # List running services
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# We pin the Compose file format version. Modern Docker Compose (v2+)
+# doesn't strictly require a `version` field, but we omit it intentionally
+# as it's now deprecated in favor of the Compose Specification.
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+services:
+  # ──────────────────────────────────────────────────────────
+  # PostgreSQL 16 with pgvector extension
+  #
+  # LEARN: pgvector adds vector similarity search to PostgreSQL.
+  # This lets us store AI embeddings directly in the database
+  # and search them with SQL — no separate vector database needed!
+  #
+  # The `pgvector/pgvector:pg16` image comes with pgvector pre-installed.
+  # We enable it in the init script below.
+  # ──────────────────────────────────────────────────────────
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: devbrain-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-devbrain}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-devbrain_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-devbrain}
+    ports:
+      # ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      # Format: HOST_PORT:CONTAINER_PORT
+      # This maps port 5432 on YOUR machine to port 5432 inside
+      # the container. So you connect to localhost:5432 as if
+      # PostgreSQL was installed locally.
+      #
+      # In PyCharm: Database > + > PostgreSQL
+      #   Host: localhost, Port: 5432
+      #   User: devbrain, Password: devbrain_secret
+      #   Database: devbrain
+      # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      # ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      # Named volume for data persistence. Without this, all data
+      # would be lost when the container restarts. The data is
+      # stored in Docker's managed volume storage.
+      # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      - pgdata:/var/lib/postgresql/data
+      # ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      # Initialization scripts. Any .sql files in this directory
+      # are executed automatically when the container is created
+      # for the FIRST time (not on restarts).
+      # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      # ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      # Healthcheck tells Docker how to verify the service is
+      # truly ready (not just "started"). Other services can
+      # use `depends_on: condition: service_healthy` to wait
+      # for this check to pass before starting.
+      # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-devbrain} -d ${POSTGRES_DB:-devbrain}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - devbrain-network
+
+  # ──────────────────────────────────────────────────────────
+  # Redis 7
+  #
+  # LEARN: Redis is an in-memory data store used here for:
+  # 1. Celery task broker — manages background job queues
+  # 2. LiteLLM caching — cache AI API responses to save money
+  # 3. Rate limiting — track API usage per user
+  #
+  # Compare with ASP.NET: Similar to using IDistributedCache
+  # with a Redis or MemoryCache implementation.
+  # ──────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: devbrain-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - devbrain-network
+
+# ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Named volumes persist data outside of the container lifecycle.
+# `docker compose down` keeps the data. `docker compose down -v` deletes it.
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+volumes:
+  pgdata:
+    name: devbrain-pgdata
+  redisdata:
+    name: devbrain-redisdata
+
+# ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# A custom network ensures containers can talk to each other by name.
+# The `postgres` service is reachable from `redis` as just `postgres:5432`.
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+networks:
+  devbrain-network:
+    name: devbrain-network
+    driver: bridge
+

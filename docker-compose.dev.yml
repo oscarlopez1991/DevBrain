@@ -1,0 +1,66 @@
+# ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# docker-compose.dev.yml: Development Overrides
+#
+# This file extends docker-compose.yml with development-specific settings.
+# It's used with: docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+#
+# Why separate files?
+# - docker-compose.yml: Base configuration (works in production too)
+# - docker-compose.dev.yml: Development extras (more ports, debug tools)
+#
+# For now, our base docker-compose.yml already works great for development.
+# This override file is here for future use when we add:
+# - Backend containerized development
+# - Frontend containerized development
+# - Debug ports for remote debugging
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+services:
+  # ── Backend Dev Server (containerized) ────────────────────
+  # TODO(PHASE-3): Uncomment when ready to containerize the backend
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     target: builder  # Use the builder stage for dev (includes dev deps)
+  #   container_name: devbrain-backend
+  #   restart: unless-stopped
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     # Mount source code for hot-reloading
+  #     - ./backend:/app
+  #   environment:
+  #     - DATABASE_URL=postgresql+asyncpg://devbrain:devbrain_secret@postgres:5432/devbrain
+  #     - REDIS_URL=redis://redis:6379/0
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #   command: uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+  #   networks:
+  #     - devbrain-network
+
+  # ── Frontend Dev Server (containerized) ───────────────────
+  # TODO(PHASE-3): Uncomment when ready to containerize the frontend
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #   container_name: devbrain-frontend
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./frontend:/app
+  #     - /app/node_modules  # Exclude node_modules from mount
+  #   environment:
+  #     - NEXT_PUBLIC_API_URL=http://localhost:8000
+  #   command: npm run dev
+  #   networks:
+  #     - devbrain-network
+
+  # PostgreSQL — override to expose debug port for pgAdmin
+  postgres:
+    ports:
+      - "5432:5432"
+

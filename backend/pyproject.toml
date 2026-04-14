@@ -1,0 +1,133 @@
+# ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# pyproject.toml: Python Project Configuration (uv)
+#
+# This file is the modern standard for Python project metadata and dependencies.
+# It replaces the older setup.py, setup.cfg, and requirements.txt approach.
+#
+# uv reads this file to:
+# 1. Know which Python version to use
+# 2. Install the correct dependencies
+# 3. Create a reproducible uv.lock file
+#
+# Compare with ASP.NET:
+# - pyproject.toml ≈ .csproj (project metadata + dependencies)
+# - uv.lock ≈ packages.lock.json (exact locked versions)
+# - uv sync ≈ dotnet restore (install deps from lock file)
+#
+# Key commands:
+#   uv sync                  # Install all dependencies from uv.lock
+#   uv add <package>         # Add a new dependency (updates uv.lock)
+#   uv add --dev <package>   # Add a dev-only dependency
+#   uv run <command>         # Run a command in the project's venv
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[project]
+name = "devbrain-backend"
+version = "0.1.0"
+description = "DevBrain — AI-Powered Document Intelligence Platform (Backend)"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.12"
+
+# ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Dependencies are organized by purpose. Each one has a comment explaining
+# why it's included and what it does.
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+dependencies = [
+    # ── Web Framework ──────────────────────────────────────────
+    "fastapi>=0.115.0",            # The web framework (like ASP.NET Core)
+    "uvicorn[standard]>=0.32.0",   # ASGI server (like Kestrel in ASP.NET)
+
+    # ── Database ───────────────────────────────────────────────
+    "sqlalchemy[asyncio]>=2.0.36", # ORM (like Entity Framework)
+    "asyncpg>=0.30.0",             # Async PostgreSQL driver
+    "alembic>=1.14.0",             # Database migrations (like EF Migrations)
+    "pgvector>=0.3.6",             # Vector extension for SQLAlchemy
+
+    # ── Validation & Settings ──────────────────────────────────
+    "pydantic>=2.10.0",            # Data validation (like Data Annotations + FluentValidation)
+    "pydantic-settings>=2.7.0",    # Settings from env vars (like IConfiguration)
+
+    # ── AI & LLM ───────────────────────────────────────────────
+    "litellm>=1.55.0",             # Multi-provider LLM abstraction
+    "langgraph>=0.2.60",           # LLM orchestration framework
+    "langchain-core>=0.3.28",      # Core abstractions for LangGraph
+
+    # ── Background Tasks ───────────────────────────────────────
+    "celery[redis]>=5.4.0",        # Distributed task queue
+    "redis>=5.2.0",                # Redis client
+
+    # ── Document Processing ────────────────────────────────────
+    "python-multipart>=0.0.18",    # File upload support for FastAPI
+    #"pypdf>=5.1.0",               # PDF parsing (uncomment in Phase 4)
+    #"python-docx>=1.1.0",         # DOCX parsing (uncomment in Phase 4)
+
+    # ── Logging & Observability ────────────────────────────────
+    "structlog>=24.4.0",           # Structured logging
+
+    # ── Utilities ──────────────────────────────────────────────
+    "httpx>=0.28.0",               # Async HTTP client (like HttpClient in .NET)
+    "python-jose[cryptography]>=3.3.0",  # JWT handling for auth
+]
+
+# ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Dev dependencies are only installed in development, not production.
+# Equivalent to <PackageReference Include="..." PrivateAssets="All"/> in .csproj
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[dependency-groups]
+dev = [
+    # ── Testing ────────────────────────────────────────────────
+    "pytest>=8.3.0",               # Test framework (like xUnit/NUnit)
+    "pytest-asyncio>=0.24.0",      # Async test support
+    "pytest-cov>=6.0.0",           # Code coverage
+    "httpx>=0.28.0",               # Test client for FastAPI
+
+    # ── Code Quality ───────────────────────────────────────────
+    "ruff>=0.8.0",                 # Linter + formatter (replaces flake8, black, isort)
+    "mypy>=1.13.0",                # Static type checking (like C# compiler checks)
+
+    # ── Evaluation (Phase 7) ───────────────────────────────────
+    #"ragas>=0.2.0",               # RAG evaluation framework (uncomment in Phase 7)
+]
+
+# ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Ruff is a blazing-fast Python linter and formatter written in Rust.
+# It replaces flake8 (linting), black (formatting), and isort (import sorting)
+# in a single tool. It's 10-100x faster than the tools it replaces.
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort (import sorting)
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "SIM",  # flake8-simplify
+    "TCH",  # type checking imports
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+# ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# pytest configuration. This is equivalent to the <PropertyGroup> in your
+# .csproj that configures test discovery and execution settings.
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
