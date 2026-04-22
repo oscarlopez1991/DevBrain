@@ -37,34 +37,28 @@ dependencies = [
     # ── Web Framework ──────────────────────────────────────────
     "fastapi>=0.115.0",            # The web framework (like ASP.NET Core)
     "uvicorn[standard]>=0.32.0",   # ASGI server (like Kestrel in ASP.NET)
-
     # ── Database ───────────────────────────────────────────────
     "sqlalchemy[asyncio]>=2.0.36", # ORM (like Entity Framework)
     "asyncpg>=0.30.0",             # Async PostgreSQL driver
+    "psycopg2-binary>=2.9.0",      # Sync PostgreSQL driver (for Alembic migrations)
     "alembic>=1.14.0",             # Database migrations (like EF Migrations)
     "pgvector>=0.3.6",             # Vector extension for SQLAlchemy
-
     # ── Validation & Settings ──────────────────────────────────
     "pydantic>=2.10.0",            # Data validation (like Data Annotations + FluentValidation)
     "pydantic-settings>=2.7.0",    # Settings from env vars (like IConfiguration)
-
     # ── AI & LLM ───────────────────────────────────────────────
     "litellm>=1.55.0",             # Multi-provider LLM abstraction
     "langgraph>=0.2.60",           # LLM orchestration framework
     "langchain-core>=0.3.28",      # Core abstractions for LangGraph
-
     # ── Background Tasks ───────────────────────────────────────
     "celery[redis]>=5.4.0",        # Distributed task queue
     "redis>=5.2.0",                # Redis client
-
     # ── Document Processing ────────────────────────────────────
     "python-multipart>=0.0.18",    # File upload support for FastAPI
     #"pypdf>=5.1.0",               # PDF parsing (uncomment in Phase 4)
     #"python-docx>=1.1.0",         # DOCX parsing (uncomment in Phase 4)
-
     # ── Logging & Observability ────────────────────────────────
     "structlog>=24.4.0",           # Structured logging
-
     # ── Utilities ──────────────────────────────────────────────
     "httpx>=0.28.0",               # Async HTTP client (like HttpClient in .NET)
     "python-jose[cryptography]>=3.3.0",  # JWT handling for auth
@@ -110,6 +104,9 @@ select = [
     "B",    # flake8-bugbear
     "SIM",  # flake8-simplify
     "TCH",  # type checking imports
+]
+ignore = [
+    "B008",  # Depends() in function defaults — standard FastAPI pattern
 ]
 
 [tool.ruff.lint.isort]

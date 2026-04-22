@@ -178,7 +178,7 @@ class TestPhase0FastAPIApp:
         """The /health endpoint must be registered."""
         from app.main import app
 
-        routes = [route.path for route in app.routes]
+        routes = [getattr(route, "path", "") for route in app.routes]
         assert "/health" in routes, (
             "/health endpoint not found. "
             "This is required for Docker healthcheck and monitoring."

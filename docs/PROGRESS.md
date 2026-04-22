@@ -68,7 +68,7 @@ make verify-phase0
 ```bash
 make verify-phase1
 ```
-- [ ] Result: ___ / 12 tests passing
+- [ ] Result: ___ / 20 tests passing
 
 ---
 

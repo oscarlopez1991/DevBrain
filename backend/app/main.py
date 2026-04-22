@@ -22,7 +22,9 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.v1 import collections, documents
 from app.config import settings
+from app.core.database import engine
 
 
 # ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -39,7 +41,6 @@ from app.config import settings
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     """Application lifespan: startup and shutdown events."""
     # ── Startup ─────────────────────────────────────────────
-    # TODO(PHASE-1): Initialize database connection pool
     # TODO(PHASE-4): Initialize LiteLLM configuration
     # TODO(PHASE-6): Initialize Celery worker
     print("🧠 DevBrain backend starting up...")
@@ -47,8 +48,8 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     yield  # Application is running
 
     # ── Shutdown ────────────────────────────────────────────
-    # TODO(PHASE-1): Close database connections
     # TODO(PHASE-4): Cleanup AI resources
+    await engine.dispose()
     print("🧠 DevBrain backend shutting down...")
 
 
@@ -121,14 +122,10 @@ async def health_check() -> dict[str, str]:
     }
 
 
-# TODO(PHASE-1): Register API routers here
-# Example:
-#   from app.api.v1 import documents, search, chat
-#   app.include_router(documents.router, prefix="/api/v1")
-#   app.include_router(search.router, prefix="/api/v1")
-#   app.include_router(chat.router, prefix="/api/v1")
+# ── API Routers (Phase 1) ────────────────────────────────────────────────────
+app.include_router(documents.router, prefix="/api/v1")
+app.include_router(collections.router, prefix="/api/v1")
 
-# CHECK(PHASE-0): Start the server with `make dev-backend`
-# Then open http://localhost:8000/health in your browser
-# ✅ You should see: {"status": "healthy", "app": "DevBrain", "version": "0.1.0"}
-# ✅ Open http://localhost:8000/docs to see the Swagger UI
+# CHECK(PHASE-1): Start with `make dev-backend`
+# ✅ http://localhost:8000/docs should show document and collection endpoints
+# ✅ make verify-phase1 should pass all tests
