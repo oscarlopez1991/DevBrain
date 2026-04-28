@@ -9,8 +9,10 @@ Run: make verify-phase1
 """
 
 import uuid
+from typing import Sequence
 
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 
 from app.models.document import Document
 from app.schemas.document import DocumentCreate, DocumentUpdate
@@ -22,62 +24,60 @@ class DocumentService:
     def __init__(self, db: AsyncSession) -> None:
         self.db = db
 
-    async def list_documents(self, *, skip: int = 0, limit: int = 20) -> list[Document]:
-        """
-        Return a paginated list of documents, ordered by created_at desc.
+    async def list_documents(self, *, skip: int = 0, limit: int = 20) -> Sequence[Document]:
+        """ Return a paginated list of documents, ordered by created_at desc. """
 
-        TODO(PHASE-1): Implement this method.
-        - Use select(Document) with .offset(skip).limit(limit)
-        - Order by created_at descending (newest first)
-        - Return the list (empty list if no documents, NOT None)
-        """
-        raise NotImplementedError
+        stmt = select(Document).order_by(Document.created_at.desc()).offset(skip).limit(limit)
+        result = await self.db.execute(stmt)
+
+        return result.scalars().all()
 
     async def get_document(self, document_id: uuid.UUID) -> Document | None:
-        """
-        Return a single document by ID, or None if not found.
+        """ Return a single document by ID, or None if not found. """
 
-        TODO(PHASE-1): Implement this method.
-        - Use session.get() or select() with a where clause
-        """
-        raise NotImplementedError
+        document = await self.db.get(Document, document_id)
+        return document # type: ignore
 
     async def create_document(self, data: DocumentCreate) -> Document:
-        """
-        Create a new document and return it.
+        """ Create a new document and return it. """
 
-        TODO(PHASE-1): Implement this method.
-        - Create a Document instance from the schema data
-        - Add it to the session and flush to get the generated ID
-        - Refresh the instance to load server defaults (timestamps)
-        - Return the created document
-        """
-        raise NotImplementedError
+        new_document = Document(**data.model_dump())
+
+        self.db.add(new_document)
+        await self.db.flush()
+        await self.db.refresh(new_document)
+
+        return new_document
 
     async def update_document(
         self, document_id: uuid.UUID, data: DocumentUpdate
     ) -> Document | None:
-        """
-        Update an existing document. Return the updated document or None if not found.
+        """ Update an existing document. Return the updated document or None if not found. """
 
-        TODO(PHASE-1): Implement this method.
-        - Fetch the document by ID
-        - If not found, return None
-        - Apply only the fields that were explicitly set
-          (use data.model_dump(exclude_unset=True))
-        - Flush and refresh
-        - Return the updated document
-        """
-        raise NotImplementedError
+        document = await self.db.get(Document, document_id)
+
+        if document is None:
+            return None
+
+        update_data = data.model_dump(exclude_unset=True)
+
+        for key, value in update_data.items():
+            setattr(document, key, value)
+
+        await self.db.flush()
+        await self.db.refresh(document)
+
+        return document # type: ignore
 
     async def delete_document(self, document_id: uuid.UUID) -> bool:
-        """
-        Delete a document by ID. Return True if deleted, False if not found.
+        """ Delete a document by ID. Return True if deleted, False if not found. """
 
-        TODO(PHASE-1): Implement this method.
-        - Fetch the document by ID
-        - If not found, return False
-        - Delete it from the session
-        - Return True
-        """
-        raise NotImplementedError
+        document = await self.db.get(Document, document_id)
+
+        if document is None:
+            return False
+
+        await self.db.delete(document)
+        await self.db.flush()
+
+        return True
