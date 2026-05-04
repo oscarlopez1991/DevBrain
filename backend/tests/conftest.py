@@ -16,8 +16,8 @@ from app.config import settings
 from app.core.database import Base, get_db
 from app.main import app
 
-# Use the same DB but could use a separate test DB in the future
-TEST_DATABASE_URL = settings.DATABASE_URL
+# Use separate test database for pytest verification tests
+TEST_DATABASE_URL = settings.TEST_DATABASE_URL
 
 test_engine = create_async_engine(TEST_DATABASE_URL, echo=False, poolclass=NullPool)
 test_session_factory = async_sessionmaker(

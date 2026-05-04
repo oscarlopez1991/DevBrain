@@ -66,6 +66,9 @@ class Settings(BaseSettings):
     DATABASE_URL: str = (
         "postgresql+asyncpg://devbrain:devbrain_secret@localhost:5432/devbrain"
     )
+    TEST_DATABASE_URL: str = (
+        "postgresql+asyncpg://devbrain:devbrain_secret@localhost:5432/devbrain_test"
+    )
 
     # ── Redis ──────────────────────────────────────────────────────────
     REDIS_URL: str = "redis://localhost:6379/0"
