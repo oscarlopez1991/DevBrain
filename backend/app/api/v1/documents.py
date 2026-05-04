@@ -10,7 +10,8 @@ Run: make verify-phase1
 
 import uuid
 
-from fastapi import APIRouter, Depends, Query
+from typing import Sequence
+from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
@@ -29,26 +30,26 @@ async def list_documents(
     skip: int = Query(0, ge=0),
     limit: int = Query(20, ge=1, le=100),
     service: DocumentService = Depends(_get_service),
-) -> list[DocumentRead]:
-    """
-    List all documents with pagination.
+) -> Sequence[DocumentRead]:
+    """ List all documents with pagination. """
 
-    TODO(PHASE-1): Call the service and return documents.
-    """
-    raise NotImplementedError
-
+    documents = await service.list_documents(skip=skip, limit=limit)
+    return [DocumentRead.model_validate(c) for c in documents]
 
 @router.get("/{document_id}", response_model=DocumentRead)
 async def get_document(
     document_id: uuid.UUID,
     service: DocumentService = Depends(_get_service),
 ) -> DocumentRead:
-    """
-    Get a single document by ID.
+    """ Get a single document by ID. """
 
-    TODO(PHASE-1): Call the service, return 404 if not found.
-    """
-    raise NotImplementedError
+    document = await service.get_document(document_id)
+
+    if document is None:
+        raise HTTPException(status_code=404, detail="Document don't found")
+
+    document_read = DocumentRead.model_validate(document)
+    return document_read
 
 
 @router.post("/", response_model=DocumentRead, status_code=201)
@@ -56,12 +57,11 @@ async def create_document(
     data: DocumentCreate,
     service: DocumentService = Depends(_get_service),
 ) -> DocumentRead:
-    """
-    Create a new document.
+    """ Create a new document. """
 
-    TODO(PHASE-1): Call the service to create and return the document.
-    """
-    raise NotImplementedError
+    document_created = await service.create_document(data)
+    document_read = DocumentRead.model_validate(document_created)
+    return document_read
 
 
 @router.patch("/{document_id}", response_model=DocumentRead)
@@ -70,12 +70,15 @@ async def update_document(
     data: DocumentUpdate,
     service: DocumentService = Depends(_get_service),
 ) -> DocumentRead:
-    """
-    Update a document. Partial updates supported.
+    """ Update a document. Partial updates supported. """
 
-    TODO(PHASE-1): Call the service, return 404 if not found.
-    """
-    raise NotImplementedError
+    document_updated = await service.update_document(document_id, data)
+
+    if document_updated is None:
+        raise HTTPException(status_code=404, detail="Document don't found")
+
+    document_read = DocumentRead.model_validate(document_updated)
+    return document_read
 
 
 @router.delete("/{document_id}", status_code=204)
@@ -83,9 +86,11 @@ async def delete_document(
     document_id: uuid.UUID,
     service: DocumentService = Depends(_get_service),
 ) -> None:
-    """
-    Delete a document.
+    """ Delete a document. """
 
-    TODO(PHASE-1): Call the service, return 404 if not found.
-    """
-    raise NotImplementedError
+    result = await service.delete_document(document_id)
+
+    if not result:
+        raise HTTPException(status_code=404, detail="Document don't found")
+
+    return None
