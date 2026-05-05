@@ -43,7 +43,7 @@ class CollectionService:
         """Return a single collection by ID, or None if not found."""
 
         result = await self.db.get(Collection, collection_id)
-        return result  # type: ignore
+        return result
 
     async def create_collection(self, data: CollectionCreate) -> Collection:
         """Create a new collection and return it."""
@@ -74,7 +74,7 @@ class CollectionService:
         await self.db.flush()
         await self.db.refresh(collection)
 
-        return collection  # type: ignore
+        return collection
 
     async def delete_collection(self, collection_id: uuid.UUID) -> bool:
         """Delete a collection by ID. Return True if deleted, False if not found."""

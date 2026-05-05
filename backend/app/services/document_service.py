@@ -43,7 +43,7 @@ class DocumentService:
         """Return a single document by ID, or None if not found."""
 
         document = await self.db.get(Document, document_id)
-        return document  # type: ignore
+        return document
 
     async def create_document(self, data: DocumentCreate) -> Document:
         """Create a new document and return it."""
@@ -75,7 +75,7 @@ class DocumentService:
         await self.db.flush()
         await self.db.refresh(document)
 
-        return document  # type: ignore
+        return document
 
     async def delete_document(self, document_id: uuid.UUID) -> bool:
         """Delete a document by ID. Return True if deleted, False if not found."""
