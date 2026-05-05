@@ -9,7 +9,7 @@ Run: make verify-phase1
 """
 
 import uuid
-from typing import Sequence
+from collections.abc import Sequence
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -24,22 +24,29 @@ class CollectionService:
     def __init__(self, db: AsyncSession) -> None:
         self.db = db
 
-    async def list_collections(self, *, skip: int = 0, limit: int = 20) -> Sequence[Collection]:
-        """ Return a paginated list of collections, ordered by created_at desc. """
+    async def list_collections(
+        self, *, skip: int = 0, limit: int = 20
+    ) -> Sequence[Collection]:
+        """Return a paginated list of collections, ordered by created_at desc."""
 
-        stmt = select(Collection).order_by(Collection.created_at.desc()).offset(skip).limit(limit)
+        stmt = (
+            select(Collection)
+            .order_by(Collection.created_at.desc())
+            .offset(skip)
+            .limit(limit)
+        )
         result = await self.db.execute(stmt)
 
         return result.scalars().all()
 
     async def get_collection(self, collection_id: uuid.UUID) -> Collection | None:
-        """ Return a single collection by ID, or None if not found. """
+        """Return a single collection by ID, or None if not found."""
 
         result = await self.db.get(Collection, collection_id)
-        return result # type: ignore
+        return result  # type: ignore
 
     async def create_collection(self, data: CollectionCreate) -> Collection:
-        """ Create a new collection and return it. """
+        """Create a new collection and return it."""
 
         new_collection = Collection(**data.model_dump())
 
@@ -49,8 +56,10 @@ class CollectionService:
 
         return new_collection
 
-    async def update_collection(self, collection_id: uuid.UUID, data: CollectionUpdate) -> Collection | None:
-        """ Update an existing collection. Return updated or None if not found. """
+    async def update_collection(
+        self, collection_id: uuid.UUID, data: CollectionUpdate
+    ) -> Collection | None:
+        """Update an existing collection. Return updated or None if not found."""
 
         collection = await self.db.get(Collection, collection_id)
 
@@ -65,10 +74,10 @@ class CollectionService:
         await self.db.flush()
         await self.db.refresh(collection)
 
-        return collection # type: ignore
+        return collection  # type: ignore
 
     async def delete_collection(self, collection_id: uuid.UUID) -> bool:
-        """ Delete a collection by ID. Return True if deleted, False if not found. """
+        """Delete a collection by ID. Return True if deleted, False if not found."""
 
         collection = await self.db.get(Collection, collection_id)
 

@@ -9,10 +9,10 @@ Run: make verify-phase1
 """
 
 import uuid
-from typing import Sequence
+from collections.abc import Sequence
 
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.document import Document
 from app.schemas.document import DocumentCreate, DocumentUpdate
@@ -24,22 +24,29 @@ class DocumentService:
     def __init__(self, db: AsyncSession) -> None:
         self.db = db
 
-    async def list_documents(self, *, skip: int = 0, limit: int = 20) -> Sequence[Document]:
-        """ Return a paginated list of documents, ordered by created_at desc. """
+    async def list_documents(
+        self, *, skip: int = 0, limit: int = 20
+    ) -> Sequence[Document]:
+        """Return a paginated list of documents, ordered by created_at desc."""
 
-        stmt = select(Document).order_by(Document.created_at.desc()).offset(skip).limit(limit)
+        stmt = (
+            select(Document)
+            .order_by(Document.created_at.desc())
+            .offset(skip)
+            .limit(limit)
+        )
         result = await self.db.execute(stmt)
 
         return result.scalars().all()
 
     async def get_document(self, document_id: uuid.UUID) -> Document | None:
-        """ Return a single document by ID, or None if not found. """
+        """Return a single document by ID, or None if not found."""
 
         document = await self.db.get(Document, document_id)
-        return document # type: ignore
+        return document  # type: ignore
 
     async def create_document(self, data: DocumentCreate) -> Document:
-        """ Create a new document and return it. """
+        """Create a new document and return it."""
 
         new_document = Document(**data.model_dump())
 
@@ -52,7 +59,8 @@ class DocumentService:
     async def update_document(
         self, document_id: uuid.UUID, data: DocumentUpdate
     ) -> Document | None:
-        """ Update an existing document. Return the updated document or None if not found. """
+        """Update an existing document.
+        Return the updated document or None if not found."""
 
         document = await self.db.get(Document, document_id)
 
@@ -67,10 +75,10 @@ class DocumentService:
         await self.db.flush()
         await self.db.refresh(document)
 
-        return document # type: ignore
+        return document  # type: ignore
 
     async def delete_document(self, document_id: uuid.UUID) -> bool:
-        """ Delete a document by ID. Return True if deleted, False if not found. """
+        """Delete a document by ID. Return True if deleted, False if not found."""
 
         document = await self.db.get(Document, document_id)
 

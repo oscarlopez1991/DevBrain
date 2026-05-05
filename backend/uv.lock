@@ -605,6 +605,7 @@ dependencies = [
     { name = "redis" },
     { name = "sqlalchemy", extra = ["asyncio"] },
     { name = "structlog" },
+    { name = "uliweb-alembic" },
     { name = "uvicorn", extra = ["standard"] },
 ]
 
@@ -637,6 +638,7 @@ requires-dist = [
     { name = "redis", specifier = ">=5.2.0" },
     { name = "sqlalchemy", extras = ["asyncio"], specifier = ">=2.0.36" },
     { name = "structlog", specifier = ">=24.4.0" },
+    { name = "uliweb-alembic", specifier = ">=0.6.9" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.32.0" },
 ]
 
@@ -2734,6 +2736,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/8b/2e/c14812d3d4d9cd1773c6be938f89e5735a1f11a9f184ac3639b93cef35d5/tzlocal-5.3.1.tar.gz", hash = "sha256:cceffc7edecefea1f595541dbd6e990cb1ea3d19bf01b2809f362a03dd7921fd", size = 30761, upload-time = "2025-03-05T21:17:41.549Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c2/14/e2a54fabd4f08cd7af1c07030603c3356b74da07f7cc056e600436edfa17/tzlocal-5.3.1-py3-none-any.whl", hash = "sha256:eb1a66c3ef5847adf7a834f1be0800581b683b5608e74f86ecbcef8ab91bb85d", size = 18026, upload-time = "2025-03-05T21:17:39.857Z" },
+]
+
+[[package]]
+name = "uliweb-alembic"
+version = "0.6.9"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "mako" },
+    { name = "sqlalchemy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a8/e4/4cdee9e8ac5e0d4ed9d190f59eb7f4f359fa0d4244472fa1a3cc31f7edc8/uliweb-alembic-0.6.9.tar.gz", hash = "sha256:f8044301d6252dac2a509d5dcee515255b986d7496e916fbb21632c8a1749ef0", size = 480617, upload-time = "2016-02-06T12:36:55.893Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ef/31/da67d80b67d067977a0244019995f3d0e90570baac79483855d51f1c069f/uliweb_alembic-0.6.9-py2.py3-none-any.whl", hash = "sha256:f81c8570548e4d36d85120838951f8936125d22b34df40d5ad90967441dd9599", size = 299852, upload-time = "2016-02-06T12:38:49.659Z" },
 ]
 
 [[package]]

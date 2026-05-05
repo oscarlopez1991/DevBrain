@@ -9,9 +9,9 @@ Run: make verify-phase1
 """
 
 import uuid
+from collections.abc import Sequence
 
-from typing import Sequence
-from fastapi import APIRouter, Depends, Query, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
@@ -31,17 +31,18 @@ async def list_documents(
     limit: int = Query(20, ge=1, le=100),
     service: DocumentService = Depends(_get_service),
 ) -> Sequence[DocumentRead]:
-    """ List all documents with pagination. """
+    """List all documents with pagination."""
 
     documents = await service.list_documents(skip=skip, limit=limit)
     return [DocumentRead.model_validate(c) for c in documents]
+
 
 @router.get("/{document_id}", response_model=DocumentRead)
 async def get_document(
     document_id: uuid.UUID,
     service: DocumentService = Depends(_get_service),
 ) -> DocumentRead:
-    """ Get a single document by ID. """
+    """Get a single document by ID."""
 
     document = await service.get_document(document_id)
 
@@ -57,7 +58,7 @@ async def create_document(
     data: DocumentCreate,
     service: DocumentService = Depends(_get_service),
 ) -> DocumentRead:
-    """ Create a new document. """
+    """Create a new document."""
 
     document_created = await service.create_document(data)
     document_read = DocumentRead.model_validate(document_created)
@@ -70,7 +71,7 @@ async def update_document(
     data: DocumentUpdate,
     service: DocumentService = Depends(_get_service),
 ) -> DocumentRead:
-    """ Update a document. Partial updates supported. """
+    """Update a document. Partial updates supported."""
 
     document_updated = await service.update_document(document_id, data)
 
@@ -86,7 +87,7 @@ async def delete_document(
     document_id: uuid.UUID,
     service: DocumentService = Depends(_get_service),
 ) -> None:
-    """ Delete a document. """
+    """Delete a document."""
 
     result = await service.delete_document(document_id)
 

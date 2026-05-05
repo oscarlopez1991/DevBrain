@@ -8,9 +8,9 @@ Run: make verify-phase1
 """
 
 import uuid
-from typing import Sequence
+from collections.abc import Sequence
 
-from fastapi import APIRouter, Depends, Query, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
@@ -30,7 +30,7 @@ async def list_collections(
     limit: int = Query(20, ge=1, le=100),
     service: CollectionService = Depends(_get_service),
 ) -> Sequence[CollectionRead]:
-    """ List all collections with pagination. """
+    """List all collections with pagination."""
 
     collections = await service.list_collections(skip=skip, limit=limit)
     return [CollectionRead.model_validate(c) for c in collections]
@@ -41,7 +41,7 @@ async def get_collection(
     collection_id: uuid.UUID,
     service: CollectionService = Depends(_get_service),
 ) -> CollectionRead:
-    """ Get a single collection by ID. """
+    """Get a single collection by ID."""
 
     collection = await service.get_collection(collection_id)
 
@@ -57,7 +57,7 @@ async def create_collection(
     data: CollectionCreate,
     service: CollectionService = Depends(_get_service),
 ) -> CollectionRead:
-    """ Create a new collection. """
+    """Create a new collection."""
 
     collection_created = await service.create_collection(data)
     collection_read = CollectionRead.model_validate(collection_created)
@@ -70,7 +70,7 @@ async def update_collection(
     data: CollectionUpdate,
     service: CollectionService = Depends(_get_service),
 ) -> CollectionRead:
-    """ Update a collection. """
+    """Update a collection."""
 
     collection_updated = await service.update_collection(collection_id, data)
 
@@ -86,7 +86,7 @@ async def delete_collection(
     collection_id: uuid.UUID,
     service: CollectionService = Depends(_get_service),
 ) -> None:
-    """ Delete a collection and all its documents. """
+    """Delete a collection and all its documents."""
 
     result = await service.delete_collection(collection_id)
 

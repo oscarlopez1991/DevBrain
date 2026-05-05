@@ -62,6 +62,7 @@ dependencies = [
     # ── Utilities ──────────────────────────────────────────────
     "httpx>=0.28.0",               # Async HTTP client (like HttpClient in .NET)
     "python-jose[cryptography]>=3.3.0",  # JWT handling for auth
+    "uliweb-alembic>=0.6.9",
 ]
 
 # ━━━ LEARN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
