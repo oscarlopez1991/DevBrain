@@ -90,14 +90,14 @@ This is your rosetta stone. Refer back to this whenever you encounter something 
 Difficulty is NOT linear — it adapts to how far each topic is from your ASP.NET experience:
 
 ### 🟢 Guided Mode — When the domain is NEW to you
-**Applies to**: Phase 0 (setup), Phase 2 (React/Next.js), Phase 4 (AI/embeddings)
+**Applies to**: Phase 0 (setup), Phase 4 (AI/embeddings)
 - **Every step is explained** with ASP.NET comparisons (where applicable)
 - **Hints are provided** in TODOs with code examples
 - **80% boilerplate is pre-generated** — you fill in the logic
 - Focus: Understanding genuinely new concepts
 
 ### 🟡 Mixed Mode — When you know the CONCEPTS but not the TOOLS
-**Applies to**: Phase 1 (CRUD), Phase 3 (integration), Phase 5 (RAG), Phase 6 (auth), Phase 7 (agents)
+**Applies to**: Phase 1 (CRUD), Phase 2 (React/Next.js), Phase 3 (integration), Phase 5 (RAG), Phase 6 (auth), Phase 7 (agents)
 - **Architecture is explained**, implementation is on you
 - **TODOs describe WHAT to build**, not step-by-step HOW
 - **40% skeleton provided** — you write the core logic
@@ -114,7 +114,7 @@ Difficulty is NOT linear — it adapts to how far each topic is from your ASP.NE
 ```
 Phase 0 (Setup):        New ecosystem, new tools                → 🟢 Guided
 Phase 1 (Backend CRUD): You already know Controllers, EF, DTOs → 🟡 Mixed
-Phase 2 (React/Next.js): Components, hooks, JSX = totally new  → 🟢 Guided
+Phase 2 (React/Next.js): App Router, components, TS state        → 🟡 Mixed
 Phase 3 (Full-Stack):   Connecting pieces you learned separately → 🟡 Mixed
 Phase 4 (AI Embeddings): No .NET equivalent exists              → 🟢 Guided
 Phase 5 (RAG Pipeline): Builds on Phase 4 foundations           → 🟡 Mixed
@@ -127,7 +127,7 @@ Phase 8 (Deploy):       Should be independent by now            → 🔴 Challen
 |:------|:------|:-------------------|:-----|
 | 0 | Setup & Environment | — | 🟢 Guided |
 | 1 | Backend CRUD | **Close** | 🟡 Mixed |
-| 2 | Frontend React/Next.js | **Far** | 🟢 Guided |
+| 2 | Frontend React/Next.js | **Far** | 🟡 Mixed |
 | 3 | Full-Stack Integration | **Medium** | 🟡 Mixed |
 | 4 | AI Core (embeddings) | **Very far** | 🟢 Guided |
 | 5 | RAG Pipeline | **Far** | 🟡 Mixed |

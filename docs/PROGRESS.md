@@ -73,7 +73,7 @@ make verify-phase1
 ---
 
 ## Phase 2: Frontend Foundation 🎨
-**Mode**: 🟡 Mixed (you know JS/React, new: Next.js App Router + TS) | **Est. Duration**: 1 week
+**Mode**: 🟡 Mixed (Next.js App Router + TypeScript) | **Est. Duration**: 1 week
 
 ### Project Setup
 - [ ] Next.js 15+ initialized with App Router

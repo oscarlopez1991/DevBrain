@@ -116,7 +116,7 @@ Cada fase se construye sobre la anterior. Cada una incluye:
 ---
 
 ### Fase 2: Frontend Foundation con Next.js 🎨
-**Duración estimada**: 1 semana · **Learning Mode**: 🟢 Guided · **Razón**: React/Next.js = modelo mental nuevo (componentes, hooks, JSX)  
+**Duración estimada**: 1 semana · **Learning Mode**: 🟡 Mixed · **Razón**: Conocimiento previo de React/Next.js básico, foco en estructurar para backend  
 **Objetivo**: UI moderna con Next.js App Router + TypeScript
 
 - [ ] Proyecto Next.js 15+ con App Router
@@ -259,7 +259,7 @@ Cada fase se construye sobre la anterior. Cada una incluye:
 router = APIRouter(prefix="/documents", tags=["documents"])
 
 
-# TODO(FASE-1): Implementa el endpoint GET /documents
+# TODO(PHASE-1): Implementa el endpoint GET /documents
 # Requisitos:
 # 1. Acepta parámetros de paginación (skip, limit) con valores por defecto
 # 2. Usa el servicio DocumentService (inyectado con Depends)
@@ -276,13 +276,13 @@ async def list_documents(
     pass
 
 
-# CHECK(FASE-1): Ejecuta `pytest tests/test_documents.py -v`
+# CHECK(PHASE-1): Ejecuta `pytest tests/test_documents.py -v`
 # ✅ Deberías ver 5/5 tests passing
 # Si falla test_list_documents_empty, revisa que retornas [] y no None
 # Si falla test_list_documents_pagination, revisa skip/limit defaults
 
 
-# CHALLENGE(FASE-1): Añade un parámetro de filtrado por 'status'
+# CHALLENGE(PHASE-1): Añade un parámetro de filtrado por 'status'
 # que acepte un Enum (draft, processing, ready, error)
 # Extra: Haz que sea opcional y que sin filtro devuelva todos
 ```
@@ -299,7 +299,7 @@ async def list_documents(
 // cuando necesites hooks (useState, useEffect, etc.)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-// TODO(FASE-2): Este componente muestra la lista de documentos
+// TODO(PHASE-2): Este componente muestra la lista de documentos
 // Como es un Server Component, puedes hacer fetch directamente aquí
 // sin useEffect ni useState. El fetch se ejecuta en el servidor.
 //
@@ -312,7 +312,7 @@ export default async function DocumentsPage() {
   // Tu código aquí
 }
 
-// CHECK(FASE-2): Abre http://localhost:3000/documents
+// CHECK(PHASE-2): Abre http://localhost:3000/documents
 // ✅ Deberías ver los documentos cargados desde la API
 // ✅ El layout debería ser un grid responsive (1 col mobile, 3 desktop)
 // ❌ Si ves "loading..." infinito, revisa la URL de la API
@@ -321,19 +321,19 @@ export default async function DocumentsPage() {
 ### Tests como Sistema de Verificación
 
 ```python
-# tests/verification/test_fase1_check.py
+# tests/verification/test_phase1_check.py
 """
 ╔══════════════════════════════════════════════════════════════╗
-║                  VERIFICACIÓN FASE 1                        ║
+║                  VERIFICACIÓN PHASE 1                       ║
 ║  Ejecuta estos tests para confirmar que has completado      ║
 ║  correctamente la Fase 1: Backend Foundation                ║
 ║                                                             ║
-║  Comando: pytest tests/verification/test_fase1_check.py -v  ║
+║  Comando: pytest tests/verification/test_phase1_check.py -v ║
 ║  Meta: 100% passing (12/12 tests)                           ║
 ╚══════════════════════════════════════════════════════════════╝
 """
 
-class TestFase1_DatabaseSetup:
+class TestPhase1_DatabaseSetup:
     """Verifica que la DB está configurada correctamente"""
     
     def test_database_connection(self):
@@ -348,7 +348,7 @@ class TestFase1_DatabaseSetup:
         """¿Están las migraciones al día?"""
         ...
 
-class TestFase1_APIEndpoints:
+class TestPhase1_APIEndpoints:
     """Verifica que los endpoints CRUD funcionan"""
     
     def test_health_check(self):
@@ -379,11 +379,11 @@ class TestFase1_APIEndpoints:
 ## Fase 1: Backend Foundation  
 - [ ] Estructura del proyecto creada
 - [ ] Modelos SQLAlchemy definidos
-- [ ] Verificación: `pytest tests/verification/test_fase1_check.py` → _/12 passing
+- [ ] Verificación: `pytest tests/verification/test_phase1_check.py` → _/12 passing
 
 ## Fase 2: Frontend Foundation
 - [ ] Next.js inicializado
-- [ ] Verificación: `pnpm test:fase2` → _/8 passing
+- [ ] Verificación: `pnpm test:phase2` → _/8 passing
 ...
 ```
 
@@ -430,16 +430,21 @@ DevBrain/
 │       ├── 📂 unit/
 │       ├── 📂 integration/
 │       └── 📂 verification/        # Tests de verificación por fase
-│           ├── 📄 test_fase0_check.py
-│           ├── 📄 test_fase1_check.py
+│           ├── 📄 test_phase0_check.py
+│           ├── 📄 test_phase1_check.py
 │           ├── ...
-│           └── 📄 test_fase7_check.py
+│           └── 📄 test_phase7_check.py
 │
 ├── 📂 frontend/                    # Next.js application
 │   ├── 📄 Dockerfile
 │   ├── 📄 package.json
+│   ├── 📄 pnpm-lock.yaml           # Lockfile (pnpm)
+│   ├── 📄 pnpm-workspace.yaml      # pnpm build config
 │   ├── 📄 tsconfig.json
-│   ├── 📄 tailwind.config.ts
+│   ├── 📄 next.config.ts
+│   ├── 📄 postcss.config.mjs       # Tailwind v4 via PostCSS
+│   ├── 📄 eslint.config.mjs
+│   ├── 📄 components.json          # shadcn/ui configuration
 │   ├── 📂 app/                     # App Router pages
 │   │   ├── 📄 layout.tsx           # Root layout
 │   │   ├── 📄 page.tsx             # Landing / Dashboard
@@ -492,7 +497,7 @@ DevBrain/
 2. **Run Configurations** → FastAPI (backend), Next.js dev (frontend), Docker Compose (full stack)
 3. **Database Tool Window** → Conectada a PostgreSQL en `localhost:5432`
 4. **Terminal** → Con `docker compose` path configurado
-5. **File Watchers** → Para auto-format con Black (Python) y Prettier (TS)
+5. **File Watchers** → Para auto-format con Ruff (Python) y Prettier (TS)
 
 ---
 
@@ -535,7 +540,7 @@ Difficulty adapts to how far each topic is from your ASP.NET experience:
 |:---|:---|:---|:---|:---|
 | 0 | Setup & Environment | — | 🟢 Guided | New tools, new ecosystem |
 | 1 | Backend CRUD | **Close** | 🟡 Mixed | Direct ASP.NET translation |
-| 2 | Frontend React/Next.js | **Far** | 🟢 Guided | New mental model (components, hooks) |
+| 2 | Frontend React/Next.js | **Far** | 🟡 Mixed | Conocimiento previo de Next.js, composición de componentes |
 | 3 | Full-Stack Integration | **Medium** | 🟡 Mixed | Connecting already-learned pieces |
 | 4 | AI Core (embeddings) | **Very far** | 🟢 Guided | Entirely new domain, no .NET equivalent |
 | 5 | RAG Pipeline | **Far** | 🟡 Mixed | Building on Phase 4 foundations |
@@ -553,11 +558,11 @@ All code (functions, variables), comments, and technical documentation **strictl
 ### Automated Tests
 Cada fase tiene su suite de verificación:
 ```bash
-# Verificar fase 0 (setup)
-make verify-fase0
+# Verificar phase 0 (setup)
+make verify-phase0
 
-# Verificar fase 1 (backend)
-make verify-fase1
+# Verificar phase 1 (backend)
+make verify-phase1
 
 # Verificar todo hasta la fase actual
 make verify-all

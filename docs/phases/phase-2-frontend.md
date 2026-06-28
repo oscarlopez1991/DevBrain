@@ -1,8 +1,8 @@
 # Phase 2: Frontend Foundation 🎨
 
-> **Mode**: 🟡 Mixed (you know JS/React basics, new patterns: Next.js App Router + TypeScript)  
+> **Mode**: 🟡 Mixed (Next.js App Router + TypeScript, component composition)  
 > **Duration**: 1 week  
-> **Prerequisites**: Phase 1 complete, Node.js 20+ installed (`node --version`)
+> **Prerequisites**: Phase 1 complete, Node.js 20+ installed (`node --version`), pnpm installed (`pnpm --version`)
 
 ## Learning Objectives
 
@@ -58,52 +58,57 @@ This is the biggest difference from standard React:
 
 > **Rule of thumb**: Everything is a Server Component by default. Only add `"use client"` when you need interactivity (clicks, inputs, state).
 
-## Step 1: Initialize the Next.js Project
+## Step 1: Verify the Existing Project Setup
 
-Delete the placeholder README and initialize Next.js inside the `frontend/` directory:
-
-```bash
-# Remove placeholder
-rm frontend/README.md
-
-# Initialize Next.js (non-interactive)
-npx -y create-next-app@latest frontend/ \
-  --typescript \
-  --tailwind \
-  --eslint \
-  --app \
-  --import-alias "@/*" \
-  --use-pnpm
-```
-
-After initialization, verify it works:
+The Next.js project is **already initialized** with all tooling configured. Before building anything,
+verify everything works and understand what each file does:
 
 ```bash
-cd frontend && pnpm dev
+# Install dependencies (if not already done)
+cd frontend && pnpm install
+
+# Start the dev server
+pnpm dev
 # Open http://localhost:3000 — you should see the Next.js welcome page
 ```
 
-## Step 2: Install shadcn/ui
+### Understand the project structure
+
+| File | Purpose | ASP.NET Equivalent |
+|:-----|:--------|:-------------------|
+| `package.json` | Dependencies & scripts | `.csproj` |
+| `pnpm-lock.yaml` | Exact dependency versions | `packages.lock.json` |
+| `tsconfig.json` | TypeScript configuration | — (built into .NET) |
+| `next.config.ts` | Next.js framework config | `Program.cs` settings |
+| `postcss.config.mjs` | Tailwind CSS v4 via PostCSS | — |
+| `eslint.config.mjs` | Linter rules | `.editorconfig` / analyzers |
+| `components.json` | shadcn/ui component config | — |
+| `app/layout.tsx` | Root layout (wraps ALL pages) | `_Layout.cshtml` |
+| `app/page.tsx` | Homepage (`/`) | `Index.cshtml` |
+| `app/globals.css` | Global styles + Tailwind + shadcn theme | `site.css` |
+
+> **Key insight**: Tailwind CSS v4 no longer uses a `tailwind.config.ts` file. Instead, it's
+> configured entirely through `postcss.config.mjs` and CSS `@theme` directives in `globals.css`.
+> Take a look at `globals.css` to see how the design tokens (colors, radii, etc.) are defined.
+
+### shadcn/ui components already installed
+
+The following components are ready to use in `components/ui/`:
+- `button`, `card`, `input`, `separator`, `sheet`, `sidebar`, `skeleton`, `tooltip`
+
+The `next-themes` package is also already installed for dark mode support.
+
+## Step 2: Understand shadcn/ui
 
 shadcn/ui is a component library that generates the actual source code into your project
 (unlike MUI or Bootstrap which are packages you import). This means you OWN the code
-and can customize everything.
+and can customize everything. The components are already installed in `components/ui/`.
+
+If you need additional components later, add them with:
 
 ```bash
 cd frontend
-npx -y shadcn@latest init
-```
-
-When prompted:
-- Style: **Default**
-- Base color: **Neutral**
-- CSS variables: **Yes**
-
-Then install the components we need:
-
-```bash
-npx -y shadcn@latest add button card input separator
-npx -y shadcn@latest add sidebar sheet tooltip
+pnpm dlx shadcn@latest add [component-name]
 ```
 
 ## Step 3: Build the Sidebar Layout
