@@ -2,7 +2,7 @@
 # Makefile: The Project Command Interface
 #
 # A Makefile provides a unified, discoverable interface for ALL project
-# commands. Instead of remembering dozens of docker, pytest, npm commands,
+# commands. Instead of remembering dozens of docker, pytest, pnpm commands,
 # you just type `make <target>`.
 #
 # Why use a Makefile instead of scripts?
@@ -87,7 +87,7 @@ install-backend: ## Install Python dependencies with uv
 	@echo "✅ Backend dependencies installed."
 
 install-frontend: ## Install Node.js dependencies
-	cd $(FRONTEND_DIR) && npm install
+	cd $(FRONTEND_DIR) && pnpm install
 	@echo "✅ Frontend dependencies installed."
 
 install: install-backend install-frontend ## Install all dependencies
@@ -99,7 +99,7 @@ dev-backend: ## Start FastAPI dev server
 	cd $(BACKEND_DIR) && uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 dev-frontend: ## Start Next.js dev server
-	cd $(FRONTEND_DIR) && npm run dev
+	cd $(FRONTEND_DIR) && pnpm dev
 
 dev: ## Start all development servers (requires tmux or run in separate terminals)
 	@echo "🚀 Start each server in a separate terminal:"
@@ -130,7 +130,7 @@ test-backend: ## Run backend tests
 	cd $(BACKEND_DIR) && uv run pytest -v
 
 test-frontend: ## Run frontend tests
-	cd $(FRONTEND_DIR) && npm test
+	cd $(FRONTEND_DIR) && pnpm test
 
 test: test-backend ## Run all tests
 
@@ -150,7 +150,7 @@ verify-phase1: ## Verify Phase 1: Backend Foundation
 	cd $(BACKEND_DIR) && uv run pytest tests/verification/test_phase1_check.py -v
 
 verify-phase2: ## Verify Phase 2: Frontend Foundation
-	cd $(FRONTEND_DIR) && npm run test:phase2
+	cd $(FRONTEND_DIR) && pnpm test:phase2
 
 verify-phase3: ## Verify Phase 3: Full-Stack Integration
 	cd $(BACKEND_DIR) && uv run pytest tests/verification/test_phase3_check.py -v
@@ -176,11 +176,11 @@ verify-all: ## Run all phase verifications
 # ──────────────────────────────────────────────────────────────
 lint: ## Run linters (ruff for Python, eslint for TypeScript)
 	cd $(BACKEND_DIR) && uv run ruff check .
-	cd $(FRONTEND_DIR) && npm run lint
+	cd $(FRONTEND_DIR) && pnpm lint
 
 format: ## Auto-format code (ruff for Python, prettier for TypeScript)
 	cd $(BACKEND_DIR) && uv run ruff format .
-	cd $(FRONTEND_DIR) && npx prettier --write "**/*.{ts,tsx,js,jsx,json,css,md}"
+	cd $(FRONTEND_DIR) && pnpm dlx prettier --write "**/*.{ts,tsx,js,jsx,json,css,md}"
 
 # ──────────────────────────────────────────────────────────────
 # 🧹 Cleanup

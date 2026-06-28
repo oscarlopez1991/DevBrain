@@ -59,7 +59,7 @@ Upload documents. Chat with them. Search semantically. Get AI-powered insights.
 | **AI** | LiteLLM, LangGraph, Google AI Studio, Groq, HuggingFace |
 | **Database** | PostgreSQL 16 + pgvector, Redis |
 | **Infrastructure** | Docker Compose, GitHub Actions, Vercel, Railway |
-| **Package Manager** | uv (Python), npm (Node.js) |
+| **Package Manager** | uv (Python), pnpm (Node.js) |
 
 ## 🚀 Quick Start
 
@@ -67,7 +67,7 @@ Upload documents. Chat with them. Search semantically. Get AI-powered insights.
 
 - [Docker Desktop](https://docker.com/products/docker-desktop) (v24+)
 - [Python 3.12+](https://python.org) with [uv](https://docs.astral.sh/uv/)
-- [Node.js 20+](https://nodejs.org) with npm
+- [Node.js 20+](https://nodejs.org) with pnpm
 - [Git](https://git-scm.com)
 
 ### Setup

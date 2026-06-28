@@ -73,20 +73,20 @@ npx -y create-next-app@latest frontend/ \
   --eslint \
   --app \
   --import-alias "@/*" \
-  --use-npm
+  --use-pnpm
 ```
 
 After initialization, verify it works:
 
 ```bash
-cd frontend && npm run dev
+cd frontend && pnpm dev
 # Open http://localhost:3000 — you should see the Next.js welcome page
 ```
 
 ## Step 2: Install shadcn/ui
 
 shadcn/ui is a component library that generates the actual source code into your project
-(unlike MUI or Bootstrap which are npm packages you import). This means you OWN the code
+(unlike MUI or Bootstrap which are packages you import). This means you OWN the code
 and can customize everything.
 
 ```bash
@@ -200,7 +200,7 @@ Next.js + Tailwind v4 supports dark mode via CSS `prefers-color-scheme` or a man
 
 Install the theme provider:
 ```bash
-npm install next-themes
+pnpm install next-themes
 ```
 
 **Key pattern**:
@@ -228,7 +228,7 @@ make verify-phase2
 ```
 
 If tests fail, check:
-- Is the dev server running? (`npm run dev`)
+- Is the dev server running? (`pnpm dev`)
 - Does `http://localhost:3000` load without errors?
 - Are all shadcn/ui components installed?
 

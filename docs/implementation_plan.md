@@ -383,7 +383,7 @@ class TestFase1_APIEndpoints:
 
 ## Fase 2: Frontend Foundation
 - [ ] Next.js inicializado
-- [ ] Verificación: `npm run test:fase2` → _/8 passing
+- [ ] Verificación: `pnpm test:fase2` → _/8 passing
 ...
 ```
 
