@@ -5,75 +5,75 @@
 
 ---
 
-## Phase 0: Foundations & Environment 🔧
+## Phase 0: Foundations & Environment 🔧 ✅ COMPLETE
 **Mode**: 🟢 Guided (new tools) | **Est. Duration**: 2-3 days
 
 ### Environment Setup
-- [ ] Python 3.12 installed and available via `python3 --version`
-- [ ] uv installed and available via `uv --version`
-- [ ] Node.js 20+ installed via `node --version`
-- [ ] Docker Desktop installed and running
-- [ ] PyCharm Pro opened with the DevBrain project
+- [x] Python 3.12 installed and available via `python3 --version`
+- [x] uv installed and available via `uv --version`
+- [x] Node.js 20+ installed via `node --version`
+- [x] Docker Desktop installed and running
+- [x] PyCharm Pro opened with the DevBrain project
 
 ### PyCharm Configuration
-- [ ] Next.js Support plugin installed
-- [ ] Docker plugin enabled
-- [ ] Database Tools plugin enabled
-- [ ] Tailwind CSS plugin installed
-- [ ] Pydantic plugin installed
-- [ ] Python interpreter configured (local venv via uv)
+- [x] Next.js Support plugin installed
+- [x] Docker plugin enabled
+- [x] Database Tools plugin enabled
+- [x] Tailwind CSS plugin installed
+- [x] Pydantic plugin installed
+- [x] Python interpreter configured (local venv via uv)
 
 ### Project Setup
-- [ ] `.env` file created from `.env.example`
-- [ ] Backend dependencies installed: `make install-backend`
-- [ ] Docker services running: `make up`
-- [ ] PostgreSQL reachable: PyCharm Database Tools connected
-- [ ] Redis reachable: `docker compose exec redis redis-cli ping` → PONG
-- [ ] FastAPI health check: http://localhost:8000/health → `{"status": "healthy"}`
-- [ ] Swagger UI visible: http://localhost:8000/docs
+- [x] `.env` file created from `.env.example`
+- [x] Backend dependencies installed: `make install-backend`
+- [x] Docker services running: `make up`
+- [x] PostgreSQL reachable: PyCharm Database Tools connected
+- [x] Redis reachable: `docker compose exec redis redis-cli ping` → PONG
+- [x] FastAPI health check: http://localhost:8000/health → `{"status": "healthy"}`
+- [x] Swagger UI visible: http://localhost:8000/docs
 
 ### ✅ Verification
 ```bash
 make verify-phase0
 ```
-- [ ] Result: ___ / 8 tests passing
+- [x] Result: 8 / 8 tests passing
 
 ---
 
-## Phase 1: Backend Foundation 🐍
+## Phase 1: Backend Foundation 🐍 ✅ COMPLETE
 **Mode**: 🟡 Mixed (direct ASP.NET translation) | **Est. Duration**: 1 week
 
 ### Database & Models
-- [ ] Alembic initialized and configured
-- [ ] `Document` model created with SQLAlchemy
-- [ ] `Collection` model created with SQLAlchemy
-- [ ] Initial migration generated and applied
-- [ ] Seed data script working
+- [x] Alembic initialized and configured
+- [x] `Document` model created with SQLAlchemy
+- [x] `Collection` model created with SQLAlchemy
+- [x] Initial migration generated and applied
+- [x] Seed data script working
 
 ### API Endpoints
-- [ ] `POST /api/v1/documents` — Create document
-- [ ] `GET /api/v1/documents` — List documents (with pagination)
-- [ ] `GET /api/v1/documents/{id}` — Get single document
-- [ ] `PUT /api/v1/documents/{id}` — Update document
-- [ ] `DELETE /api/v1/documents/{id}` — Delete document
-- [ ] Collections CRUD endpoints
+- [x] `POST /api/v1/documents` — Create document
+- [x] `GET /api/v1/documents` — List documents (with pagination)
+- [x] `GET /api/v1/documents/{id}` — Get single document
+- [x] `PATCH /api/v1/documents/{id}` — Update document
+- [x] `DELETE /api/v1/documents/{id}` — Delete document
+- [x] Collections CRUD endpoints
 
 ### Code Quality
-- [ ] Pydantic schemas for all models
-- [ ] Centralized error handling
-- [ ] `ruff check .` passes with no errors
-- [ ] `mypy .` passes with no errors
+- [x] Pydantic schemas for all models
+- [x] Centralized error handling
+- [x] `ruff check .` passes with no errors
+- [x] `mypy .` passes with no errors
 
 ### ✅ Verification
 ```bash
 make verify-phase1
 ```
-- [ ] Result: ___ / 20 tests passing
+- [x] Result: 20 / 20 tests passing
 
 ---
 
 ## Phase 2: Frontend Foundation 🎨
-**Mode**: 🟢 Guided (new mental model: React) | **Est. Duration**: 1 week
+**Mode**: 🟡 Mixed (you know JS/React, new: Next.js App Router + TS) | **Est. Duration**: 1 week
 
 ### Project Setup
 - [ ] Next.js 15+ initialized with App Router
