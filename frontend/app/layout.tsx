@@ -41,27 +41,7 @@ export default function RootLayout({
             3. Render the `<AppSidebar />` component next to the main content.
             4. Wrap the main content (and `<SidebarTrigger />`) inside a flex container (e.g. `<main className="flex-1 flex flex-col h-screen overflow-y-auto">`) so that it scrolls independently.
         */}
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SidebarProvider>
-            <div className="flex h-screen w-screen overflow-hidden">
-              <AppSidebar />
-              <main className="flex-1 flex flex-col h-screen overflow-y-auto bg-zinc-50 dark:bg-zinc-950">
-                <header className="border-b border-border p-4 flex items-center bg-white dark:bg-zinc-900">
-                  <SidebarTrigger />
-                  <div className="ml-4 font-semibold text-sm">Dashboard</div>
-                </header>
-                <div className="flex-1 flex flex-col">
-                  {children}
-                </div>
-              </main>
-            </div>
-          </SidebarProvider>
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );

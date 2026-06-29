@@ -53,7 +53,6 @@ runTest('TypeScript strict mode enabled', () => {
   const tsconfigPath = path.join(projectRoot, 'tsconfig.json');
   if (!fs.existsSync(tsconfigPath)) throw new Error('Missing tsconfig.json');
   const content = fs.readFileSync(tsconfigPath, 'utf8');
-  // Strip comments from tsconfig json to parse safely or use simple check
   if (!content.includes('"strict": true')) {
     throw new Error('"strict": true not found in tsconfig.json');
   }
@@ -63,14 +62,14 @@ runTest('TypeScript strict mode enabled', () => {
 runTest('Root layout with sidebar navigation implemented', () => {
   const layoutPath = path.join(projectRoot, 'app/layout.tsx');
   const content = fs.readFileSync(layoutPath, 'utf8');
-  if (!content.includes('SidebarProvider') || !content.includes('AppSidebar')) {
-    throw new Error('SidebarProvider and AppSidebar wrapper not found in app/layout.tsx');
+  if (!content.includes('<SidebarProvider') || !content.includes('<AppSidebar')) {
+    throw new Error('SidebarProvider and AppSidebar wrappers are not rendered in app/layout.tsx');
   }
   
   const sidebarPath = path.join(projectRoot, 'components/layout/app-sidebar.tsx');
   if (!fs.existsSync(sidebarPath)) throw new Error('Missing components/layout/app-sidebar.tsx');
   const sidebarContent = fs.readFileSync(sidebarPath, 'utf8');
-  if (!sidebarContent.includes('navItems') || !sidebarContent.includes('pathname === item.url')) {
+  if (!sidebarContent.includes('navItems.map') || !sidebarContent.includes('pathname === item.url')) {
     throw new Error('Navigation menu with active route checking is not implemented correctly in app-sidebar.tsx');
   }
 });
@@ -79,8 +78,8 @@ runTest('Root layout with sidebar navigation implemented', () => {
 runTest('Dashboard page with mock metrics implemented', () => {
   const pagePath = path.join(projectRoot, 'app/page.tsx');
   const content = fs.readFileSync(pagePath, 'utf8');
-  if (!content.includes('stats') || !content.includes('stats.map') || !content.includes('Card')) {
-    throw new Error('Metrics grid mapping over stats not found in app/page.tsx');
+  if (!content.includes('stats.map') || !content.includes('Card') || !content.includes('<CardHeader')) {
+    throw new Error('Metrics grid mapping over stats not found or not rendering Cards in app/page.tsx');
   }
 });
 
@@ -89,8 +88,8 @@ runTest('Documents list page implemented', () => {
   const docsPagePath = path.join(projectRoot, 'app/documents/page.tsx');
   if (!fs.existsSync(docsPagePath)) throw new Error('Missing app/documents/page.tsx');
   const content = fs.readFileSync(docsPagePath, 'utf8');
-  if (!content.includes('mockDocuments') || !content.includes('mockDocuments.map') || !content.includes('statusColors')) {
-    throw new Error('mockDocuments list or colored status badges not found in app/documents/page.tsx');
+  if (!content.includes('mockDocuments.map') || !content.includes('statusColors[')) {
+    throw new Error('mockDocuments list or colored status badges not found or not rendered in app/documents/page.tsx');
   }
 });
 
@@ -99,8 +98,13 @@ runTest('Dark mode toggle working', () => {
   const togglePath = path.join(projectRoot, 'components/theme-toggle.tsx');
   if (!fs.existsSync(togglePath)) throw new Error('Missing components/theme-toggle.tsx');
   const content = fs.readFileSync(togglePath, 'utf8');
-  if (!content.includes('useTheme') || !content.includes('setTheme')) {
-    throw new Error('Theme toggle does not use next-themes to control theme state');
+  if (!content.includes('useTheme') || !content.includes('setTheme(') || !content.includes('onClick={')) {
+    throw new Error('Theme toggle does not use next-themes to control theme state or onClick trigger is missing');
+  }
+  
+  // Make sure they filled in the toggle logic
+  if (content.includes('// TODO(PHASE-2): Implement toggle logic.') && !content.includes('setTheme(theme ===')) {
+    throw new Error('Theme toggle click handler logic is missing or empty');
   }
 });
 

@@ -40,7 +40,6 @@ export function ThemeToggle() {
       onClick={() => {
         // TODO(PHASE-2): Implement toggle logic.
         // If the theme is currently "dark", set it to "light". Otherwise, set it to "dark".
-        setTheme(theme === "dark" ? "light" : "dark")
       }}
     >
       <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />

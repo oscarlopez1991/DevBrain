@@ -67,23 +67,6 @@ export function AppSidebar() {
                   
                   Pista: Use the `isActive` attribute or add conditional classes using `cn()` utility.
               */}
-              {navItems.map((item) => {
-                const isActive = pathname === item.url
-                return (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      isActive={isActive}
-                      tooltip={item.title}
-                      render={
-                        <Link href={item.url}>
-                          <item.icon className="h-4 w-4" />
-                          <span>{item.title}</span>
-                        </Link>
-                      }
-                    />
-                  </SidebarMenuItem>
-                )
-              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

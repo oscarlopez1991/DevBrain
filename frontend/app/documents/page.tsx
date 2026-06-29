@@ -46,40 +46,6 @@ export default function DocumentsPage() {
                 
                 Pista: You can build a custom badge or use conditional styling with inline classes.
             */}
-            <div className="relative w-full overflow-auto">
-              <table className="w-full caption-bottom text-sm">
-                <thead className="[&_tr]:border-b">
-                  <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Title</th>
-                    <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">File Name</th>
-                    <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Status</th>
-                    <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Created At</th>
-                  </tr>
-                </thead>
-                <tbody className="[&_tr:last-child]:border-0">
-                  {mockDocuments.map((doc) => {
-                    const statusColors: Record<string, string> = {
-                      READY: "bg-emerald-500/10 text-emerald-500",
-                      PROCESSING: "bg-amber-500/10 text-amber-500",
-                      DRAFT: "bg-zinc-500/10 text-zinc-500",
-                    }
-
-                    return (
-                      <tr key={doc.id} className="border-b transition-colors hover:bg-muted/50">
-                        <td className="p-4 align-middle font-medium">{doc.title}</td>
-                        <td className="p-4 align-middle text-muted-foreground">{doc.filename}</td>
-                        <td className="p-4 align-middle">
-                          <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${statusColors[doc.status]}`}>
-                            {doc.status}
-                          </span>
-                        </td>
-                        <td className="p-4 align-middle text-muted-foreground">{doc.created_at}</td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
           </CardContent>
         </Card>
       </div>
