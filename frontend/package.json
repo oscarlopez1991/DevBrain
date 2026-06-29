@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:phase2": "node scripts/verify-phase2.js"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
