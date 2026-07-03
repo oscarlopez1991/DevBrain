@@ -1,0 +1,117 @@
+# DevBrain — Cursor index exclusions
+# Keeps AI context focused on source, docs, and config you actually edit.
+# Syntax matches .gitignore (glob patterns, # comments).
+
+# ──────────────────────────────────────────────────────────────
+# Secrets & local env (never index)
+# ──────────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+# Keep .env.example — safe template for agents
+
+# ──────────────────────────────────────────────────────────────
+# Dependencies (100k+ files, no editorial value)
+# ──────────────────────────────────────────────────────────────
+**/node_modules/
+**/.pnpm-store/
+**/.pnp
+**/.pnp.*
+**/.yarn/*
+!**/.yarn/patches
+!**/.yarn/plugins
+!**/.yarn/releases
+!**/.yarn/versions
+
+# Python virtual environments
+**/.venv/
+**/venv/
+**/.uv/
+
+# ──────────────────────────────────────────────────────────────
+# Lock files (large, auto-generated; use package.json / pyproject.toml)
+# ──────────────────────────────────────────────────────────────
+**/pnpm-lock.yaml
+**/package-lock.json
+**/yarn.lock
+**/bun.lockb
+**/uv.lock
+
+# ──────────────────────────────────────────────────────────────
+# Build output & caches
+# ──────────────────────────────────────────────────────────────
+**/.next/
+**/out/
+**/.turbo/
+**/dist/
+**/build/
+**/.eggs/
+**/*.egg-info/
+**/*.egg
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/*.so
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.tox/
+**/.coverage
+**/htmlcov/
+**/coverage/
+**/*.tsbuildinfo
+**/next-env.d.ts
+
+# ──────────────────────────────────────────────────────────────
+# Docker & local runtime data
+# ──────────────────────────────────────────────────────────────
+**/docker-data/
+**/pgdata/
+**/uploads/
+**/storage/
+**/logs/
+**/*.log
+
+# ──────────────────────────────────────────────────────────────
+# IDE, editor & Cursor internals
+# ──────────────────────────────────────────────────────────────
+**/.idea/
+**/.vscode/
+**/.cursor/projects/
+**/.git/
+**/.DS_Store
+**/Thumbs.db
+**/*.swp
+**/*.swo
+**/*~
+
+# ──────────────────────────────────────────────────────────────
+# Deploy / hosting artifacts
+# ──────────────────────────────────────────────────────────────
+**/.vercel/
+
+# ──────────────────────────────────────────────────────────────
+# Binaries & heavy assets (icons/SVG in public/ stay indexed)
+# ──────────────────────────────────────────────────────────────
+**/*.pem
+**/app/favicon.ico
+**/*.woff
+**/*.woff2
+**/*.ttf
+**/*.eot
+**/*.pdf
+**/*.zip
+**/*.tar
+**/*.gz
+**/*.sqlite
+**/*.db
+
+# ──────────────────────────────────────────────────────────────
+# Source maps & minified bundles (if generated locally)
+# ──────────────────────────────────────────────────────────────
+**/*.min.js
+**/*.min.css
+**/*.map
