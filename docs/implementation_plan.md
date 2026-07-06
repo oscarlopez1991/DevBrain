@@ -42,7 +42,7 @@ Eres senior dev en ASP.NET con 2 años de gap. Ya conoces patrones MVC, REST API
 ```
 ┌──────────────────────────────────────────────────────────┐
 │                      FRONTEND                            │
-│  Next.js 15+ · TypeScript · Tailwind CSS v4 · shadcn/ui  │
+│  Next.js 16+ · TypeScript · Tailwind CSS v4 · shadcn/ui  │
 │  React Server Components · Zustand (state)               │
 └────────────────────────┬─────────────────────────────────┘
                          │ REST + SSE (streaming)
@@ -119,7 +119,7 @@ Cada fase se construye sobre la anterior. Cada una incluye:
 **Duración estimada**: 1 semana · **Learning Mode**: 🟡 Mixed · **Razón**: Conocimiento previo de React/Next.js básico, foco en estructurar para backend  
 **Objetivo**: UI moderna con Next.js App Router + TypeScript
 
-- [ ] Proyecto Next.js 15+ con App Router
+- [ ] Proyecto Next.js 16+ con App Router
 - [ ] Sistema de diseño con Tailwind CSS v4 + shadcn/ui
 - [ ] Layout principal con sidebar navegable
 - [ ] Página de dashboard con métricas (mock data)

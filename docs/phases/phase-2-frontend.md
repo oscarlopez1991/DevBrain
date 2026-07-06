@@ -29,7 +29,7 @@ By the end of this phase, you will:
 ### App Router vs Pages Router
 
 You may have seen React Router or even Next.js Pages Router before.
-Next.js 15 uses the **App Router**, which is file-system based:
+Next.js 16 uses the **App Router**, which is file-system based:
 
 ```
 app/

@@ -20,8 +20,8 @@ function runTest(name, fn) {
   }
 }
 
-// Test 1: Next.js 15+ App Router setup
-runTest('Next.js initialized with App Router', () => {
+// Test 1: Next.js 16+ App Router setup
+runTest('Next.js 16+ initialized with App Router', () => {
   const layoutPath = path.join(projectRoot, 'app/layout.tsx');
   const pagePath = path.join(projectRoot, 'app/page.tsx');
   if (!fs.existsSync(layoutPath)) throw new Error('Missing app/layout.tsx');

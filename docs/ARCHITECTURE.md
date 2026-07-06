@@ -9,7 +9,7 @@ DevBrain is a document intelligence platform that uses AI to help users search, 
 ```
 ┌──────────────────┐     ┌──────────────────┐     ┌──────────────────────────┐
 │                  │     │                  │     │                          │
-│   Browser/User   │────▶│   Next.js 15+    │────▶│   FastAPI Backend        │
+│   Browser/User   │────▶│   Next.js 16+    │────▶│   FastAPI Backend        │
 │                  │     │   (Vercel)       │     │   (Railway)              │
 │                  │     │                  │     │                          │
 └──────────────────┘     └──────────────────┘     └─────────┬────────────────┘
@@ -34,7 +34,7 @@ DevBrain is a document intelligence platform that uses AI to help users search, 
 
 ## Layer Responsibilities
 
-### Frontend (Next.js 15+ / TypeScript)
+### Frontend (Next.js 16+ / TypeScript)
 - **Server Components**: Data fetching, SEO, initial renders
 - **Client Components**: Interactive UI (chat, search, file upload)
 - **State Management**: Zustand for global client state

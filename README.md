@@ -24,7 +24,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
 [![Tailwind](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://postgresql.org)
@@ -54,7 +54,7 @@ Upload documents. Chat with them. Search semantically. Get AI-powered insights.
 
 | Layer | Technology |
 |:------|:-----------|
-| **Frontend** | Next.js 15+, TypeScript, Tailwind CSS v4, shadcn/ui |
+| **Frontend** | Next.js 16+, TypeScript, Tailwind CSS v4, shadcn/ui |
 | **Backend** | Python 3.12, FastAPI, Pydantic v2, SQLAlchemy |
 | **AI** | LiteLLM, LangGraph, Google AI Studio, Groq, HuggingFace |
 | **Database** | PostgreSQL 16 + pgvector, Redis |

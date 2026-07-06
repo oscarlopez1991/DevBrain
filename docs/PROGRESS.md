@@ -76,7 +76,7 @@ make verify-phase1
 **Mode**: 🟡 Mixed (Next.js App Router + TypeScript) | **Est. Duration**: 1 week
 
 ### Project Setup
-- [ ] Next.js 15+ initialized with App Router
+- [ ] Next.js 16+ initialized with App Router
 - [ ] Tailwind CSS v4 configured
 - [ ] shadcn/ui installed and configured
 - [ ] TypeScript strict mode enabled
