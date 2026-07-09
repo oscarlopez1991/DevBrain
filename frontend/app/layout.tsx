@@ -34,14 +34,15 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full bg-background font-sans text-foreground">
-        {/* TODO(PHASE-2): Wrap the application in providers and set up the Sidebar layout.
-            Requirements:
-            1. Wrap children with `ThemeProvider` passing `attribute="class"`, `defaultTheme="system"`, and `enableSystem`.
-            2. Inside, wrap with `SidebarProvider` to enable collapsible sidebar contexts.
-            3. Render the `<AppSidebar />` component next to the main content.
-            4. Wrap the main content (and `<SidebarTrigger />`) inside a flex container (e.g. `<main className="flex-1 flex flex-col h-screen overflow-y-auto">`) so that it scrolls independently.
-        */}
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <SidebarProvider>
+            <AppSidebar/>
+            <main className="flex-1 flex flex-col h-screen overflow-y-auto">
+              <SidebarTrigger/>
+              {children}
+            </main>
+          </SidebarProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

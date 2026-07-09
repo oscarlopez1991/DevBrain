@@ -58,15 +58,17 @@ export function AppSidebar() {
           <SidebarGroupLabel className="group-data-[collapsible=icon]:hidden">Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {/* TODO(PHASE-2): Build the sidebar navigation links.
-                  Requirements:
-                  1. Map over the `navItems` array.
-                  2. Use the Next.js <Link> component instead of raw <a> tags to prevent full page reloads.
-                  3. Use `pathname === item.url` to determine if a route is currently active.
-                  4. Apply active styling (e.g., bg-accent or text-primary) to the SidebarMenuButton if active.
-                  
-                  Pista: Use the `isActive` attribute or add conditional classes using `cn()` utility.
-              */}
+              {navItems.map(item => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                        isActive={pathname === item.url}
+                        render={<Link href={item.url}/>}
+                        tooltip={item.title}>
+                      <item.icon/>
+                      <span>{item.title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+              ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
