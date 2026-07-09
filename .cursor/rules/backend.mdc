@@ -1,0 +1,22 @@
+---
+description: Backend rules for FastAPI and Python files
+globs:
+  - backend/**/*.py
+alwaysApply: false
+---
+
+# Backend Rules
+
+<!-- NOTE: AGENTS.md is the master reference for project-wide rules.
+     Keep rules here as a Cursor-specific subset. Don't add rules
+     that contradict AGENTS.md. -->
+
+- Use `uv` / `uv run` for Python commands.
+- Keep business logic in `services/`, not in routers.
+- Keep routers thin: receive request, call service, map result to response.
+- Use Pydantic v2 schemas for request and response validation.
+- Use SQLAlchemy patterns already established in the project.
+- If a service returns `None` for a missing resource, raise the appropriate `HTTPException` in the router.
+- Do not introduce ad-hoc patterns if an existing project pattern already exists.
+- Do not create or modify Alembic migrations unless explicitly requested.
+- Use English in code, identifiers, comments, and docs.

@@ -1,0 +1,23 @@
+---
+description: Frontend rules for Next.js App Router files
+globs:
+  - frontend/**/*.ts
+  - frontend/**/*.tsx
+alwaysApply: false
+---
+
+# Frontend Rules
+
+<!-- NOTE: AGENTS.md is the master reference for project-wide rules.
+     Keep rules here as a Cursor-specific subset. Don't add rules
+     that contradict AGENTS.md. -->
+
+- Prefer Server Components by default.
+- Add `"use client"` only when interactivity is required.
+- Use `pnpm` for all frontend package and script operations.
+- Follow Next.js App Router conventions.
+- Tailwind CSS v4 is configured via `postcss.config.mjs` and `globals.css`; do not introduce `tailwind.config.ts` unless explicitly requested.
+- Prefer shadcn/ui components from `components/ui/` before creating custom primitives.
+- Use `usePathname()` from `next/navigation` for active navigation state when needed.
+- Keep components focused and composable.
+- Use English in code, props, comments, and docs.
