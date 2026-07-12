@@ -24,15 +24,27 @@ export default function DashboardPage() {
         <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
         <p className="text-muted-foreground">Welcome back to DevBrain. Here is your knowledge overview.</p>
       </div>
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {stats.map(item => (
+            <Card key={item.title}>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  {item.icon}
+                  <span>{item.title}</span>
+                </CardTitle>
+              </CardHeader>
 
-      {/* TODO(PHASE-2): Render a grid of metric cards.
-          Requirements:
-          1. Use a responsive grid container (e.g., `<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">`).
-          2. Map over the `stats` array and render a `<Card>` component for each stat.
-          3. Within the Card, render:
-             - CardHeader with CardTitle (displaying title and icon side-by-side).
-             - CardContent (displaying the value in a large font and the description in muted small text).
-      */}
+              <CardContent className="space-y-1">
+                <div className="text-2xl font-bold tracking-tight tabular-nums">
+                  {item.value}
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {item.description}
+                </p>
+              </CardContent>
+            </Card>
+        ))}
+      </div>
     </div>
   )
 }
